@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>Accordion - srtdash</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -25,136 +26,7 @@
     <div class="main-content-inner">
       <div class="row">
         <div class="col-lg-11 mt-5">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="header-title">Cashbooks</h4>
-              <div id="accordion2" class="according accordion-s2">
-                <div class="card">
-                  <div class="card-header">
-                    <a class="card-link" data-toggle="collapse" href="#accordion21">Cashbook #1</a>
-                  </div>
-                  <div id="accordion21" class="collapse show" data-parent="#accordion2">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="single-table">
-                          <div class="table-responsive">
-                            <table class="table text-center">
-                              <thead class="text-uppercase bg-light">
-                              <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Income Purpose</th>
-                                <th scope="col">Payment</th>
-                                <th scope="col">From</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Regular</th>
-                                <th scope="col">action</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Salary</td>
-                                <td>$2500</td>
-                                <td>EPAM Systems</td>
-                                <td>05/03/21</td>
-                                <td>true</td>
-                                <td><em class="ti-trash"></em></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>Gift</td>
-                                <td>$150</td>
-                                <td>Family</td>
-                                <td>01/03/21</td>
-                                <td>false</td>
-                                <td><em class="ti-trash"></em></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>Debt repayment</td>
-                                <td>$300</td>
-                                <td>Friend</td>
-                                <td>07/03/21</td>
-                                <td>false</td>
-                                <td><em class="ti-trash"></em></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">4</th>
-                                <td>Lottery</td>
-                                <td>$50</td>
-                                <td>Ukraine Lotto</td>
-                                <td>05/03/21</td>
-                                <td>false</td>
-                                <td><em class="ti-trash"></em></td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="single-table">
-                          <div class="table-responsive">
-                            <table class="table text-center">
-                              <thead class="text-uppercase bg-light">
-                              <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Cost Purpose</th>
-                                <th scope="col">Payment</th>
-                                <th scope="col">To</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Full paid</th>
-                                <th scope="col">action</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Products</td>
-                                <td>$600</td>
-                                <td>Auchan</td>
-                                <td>01/03/21</td>
-                                <td>true</td>
-                                <td><em class="ti-trash"></em></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>Iphone 12</td>
-                                <td>$35000</td>
-                                <td>Apple room</td>
-                                <td>04/03/21</td>
-                                <td>true</td>
-                                <td><em class="ti-trash"></em></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>Restaurant</td>
-                                <td>$200</td>
-                                <td>La Familia</td>
-                                <td>04/03/21</td>
-                                <td>true</td>
-                                <td><em class="ti-trash"></em></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">4</th>
-                                <td>IQOS repair</td>
-                                <td>$20</td>
-                                <td>IQOS</td>
-                                <td>06/03/21</td>
-                                <td>true</td>
-                                <td><em class="ti-trash"></em></td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-cashbook [cashbooks]="cashbooks"></app-cashbook>
         </div>
       </div>
     </div>

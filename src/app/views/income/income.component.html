@@ -1,0 +1,40 @@
+<div class="single-table">
+  <div class="table-responsive">
+    <table class="table text-center" *ngFor="let cashbook of cashbooks">
+      <thead class="text-uppercase bg-light">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Income Purpose</th>
+        <th scope="col">Payment</th>
+        <th scope="col">From</th>
+        <th scope="col">Date</th>
+        <th scope="col">Regular</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let income of cashbook.income; let i = index" [class.regular]="income.regular">
+        <th class="pointer" (click)="openEditIncomeDialog(income) " scope="row">{{i + 1}}</th>
+        <td class="pointer"
+            (click)="openEditIncomeDialog(income)">{{income.flowPurpose.trim() != '' ? income.flowPurpose : 'None'}}</td>
+        <td class="pointer" (click)="openEditIncomeDialog(income)">{{'$' + income.payment}}</td>
+        <td class="pointer"
+            (click)="openEditIncomeDialog(income)">{{income.from.trim() != '' ? income.from : 'None'}}</td>
+        <td class="pointer" (click)="openEditIncomeDialog(income)">{{income.transactionDate | cashbookDatePipe }}</td>
+        <td>
+          <div class="form-check">
+            <div class="form-check-label">
+              <input class="form-check-input" type="checkbox" value="" [checked]="income.regular"
+                     (click)="toggleIncomeRegular(income)">
+              <span class="form-check-sign">
+                <span class="check"></span>
+              </span>
+            </div>
+          </div>
+        </td>
+        <td><em class="ti-trash" (click)="deleteIncomeDialog(income)"></em></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
