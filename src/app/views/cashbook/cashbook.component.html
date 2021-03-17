@@ -1,0 +1,97 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="header-title">Cashbooks</h4>
+    <div id="accordion2" class="according accordion-s2">
+      <div class="card">
+        <div class="card-header" *ngFor="let cashbook of cashbooks">
+          <a class="card-link" data-toggle="collapse" href="#accordion21">{{cashbook.name}}
+            (balance: {{'$' + cashbook.balance}})</a>
+        </div>
+        <div id="accordion21" class="collapse show" data-parent="#accordion2">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="single-table">
+                <div class="table-responsive">
+                  <table class="table text-center" *ngFor="let cashbook of cashbooks">
+                    <thead class="text-uppercase bg-light">
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Income Purpose</th>
+                      <th scope="col">Payment</th>
+                      <th scope="col">From</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Regular</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let income of cashbook.income; let i = index" [class.regular]="income.regular">
+                      <th scope="row">{{i + 1}}</th>
+                      <td>{{income.flowPurpose.trim() != '' ? income.flowPurpose : 'None'}}</td>
+                      <td>{{'$' + income.payment}}</td>
+                      <td>{{income.from.trim() != '' ? income.from : 'None'}}</td>
+                      <td>{{income.transactionDate | date: 'medium' }}</td>
+                      <td>
+                        <div class="form-check">
+                          <div class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" [checked]="income.regular"
+                                   (click)="toggleIncomeRegular(income)">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td><em class="ti-trash"></em></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="single-table">
+                <div class="table-responsive">
+                  <table class="table text-center" *ngFor="let cashbook of cashbooks">
+                    <thead class="text-uppercase bg-light">
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Cost Purpose</th>
+                      <th scope="col">Payment</th>
+                      <th scope="col">To</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Full paid</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let costs of cashbook.costs; let i = index" [class.notFullPaid]="!costs.fullPaid">
+                      <th scope="row">{{i + 1}}</th>
+                      <td>{{costs.flowPurpose.trim() != '' ? costs.flowPurpose : 'None'}}</td>
+                      <td>{{'$' + costs.payment}}</td>
+                      <td>{{costs.to.trim() != '' ? costs.to : 'None'}}</td>
+                      <td>{{costs.transactionDate | date: 'medium'}}</td>
+                      <td>
+                        <div class="form-check">
+                          <div class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" [checked]="costs.fullPaid"
+                                   (click)="toggleCostFullPaid(costs)">
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td><em class="ti-trash"></em></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
