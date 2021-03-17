@@ -1,0 +1,39 @@
+.dialog-income-title {
+  font-size: 20px !important;
+}
+
+.dialog-date-title {
+  font-size: 20px !important;
+}
+
+.dialog-date-from {
+  font-size: 20px !important;
+}
+
+.picker {
+  font-size: 5px !important;
+}
+
+.mat-form-field {
+  width: 100%;
+  padding: 0.3%;
+}
+
+.mat-dialog-content {
+  overflow-y: hidden !important;
+}
+
+.mat-dialog-actions {
+  padding-bottom: 20px;
+}
+
+.mat-raised-button {
+  color: white;
+  background-color: #5fa76f;
+}
+
+.discard_btn {
+  color: white;
+  background-color: #bf5959;
+}
+

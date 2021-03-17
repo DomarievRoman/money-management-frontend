@@ -53,6 +53,7 @@
   background: #fff;
   border-bottom: 1px solid #d8e3e7;
 }
+
 /*-------------------- 2.3 Page Title Area -------------------*/
 
 .page-title-area {
@@ -202,6 +203,7 @@
 .icon-container:hover span {
   color: #007BFF;
 }
+
 /*-------------------- 19. Table Basic ------------------- */
 
 .single-table .table {

@@ -1,9 +1,34 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Cashbook} from '../model/Cashbook';
+import {CashbookDaoImpl} from '../data/dao/impl/CashbookDaoImpl';
+import {Income} from '../model/Income';
+import {IncomeDaoImpl} from '../data/dao/impl/IncomeDaoImpl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataHandlerService {
 
-  constructor() { }
+  private cashbookDao = new CashbookDaoImpl();
+  private incomeDao = new IncomeDaoImpl();
+
+  constructor() {
+  }
+
+  getCashbookData(): Observable<Cashbook[]> {
+    return this.cashbookDao.getAll();
+  }
+
+  getIncomeData(): Observable<Income[]> {
+    return this.incomeDao.getAll();
+  }
+
+  updateIncome(income: Income): Observable<Income> {
+    return this.incomeDao.update(income);
+  }
+
+  deleteIncome(id: number): Observable<Income> {
+    return this.incomeDao.delete(id);
+  }
 }
