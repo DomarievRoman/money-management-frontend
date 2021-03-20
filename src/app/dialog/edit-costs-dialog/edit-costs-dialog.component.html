@@ -1,12 +1,12 @@
 <mat-dialog-content>
   <p mat-dialog-title>{{dialogTitle}}</p>
   <mat-form-field>
-    <mat-label>Income purpose</mat-label>
+    <mat-label>Cost purpose</mat-label>
     <input required #inputTitle matInput [(ngModel)]="tmpFlowPurpose" [formControl]="purposeValidValue">
     <mat-error *ngIf="purposeValidValue.invalid">{{getErrorMessage()}}</mat-error>
 
     <button *ngIf="tmpFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button aria-label="clear"
-            (click)="tmpFlowPurpose=''" class="dialog-income-title">
+            (click)="tmpFlowPurpose=''" class="dialog-cost-title">
       <mat-icon>clear</mat-icon>
     </button>
   </mat-form-field>
@@ -18,11 +18,11 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>From</mat-label>
-    <input matInput [(ngModel)]="tmpFrom">
+    <mat-label>To</mat-label>
+    <input matInput [(ngModel)]="tmpTo">
 
-    <button *ngIf="tmpFrom.trim().length > 0" mat-button matSuffix mat-icon-button aria-label="Clear"
-            (click)="tmpFrom = ''" class="dialog-income-from">
+    <button *ngIf="tmpTo.trim().length > 0" mat-button matSuffix mat-icon-button aria-label="Clear"
+            (click)="tmpTo = ''" class="dialog-cost-to">
       <mat-icon>clear</mat-icon>
     </button>
   </mat-form-field>

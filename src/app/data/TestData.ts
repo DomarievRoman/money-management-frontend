@@ -57,8 +57,7 @@ export class TestData {
   ];
   static cashbooks: Cashbook[] = [
     {
-      id: 1, name: 'My cashbook', income: [TestData.incomes[0], TestData.incomes[1], TestData.incomes[2], TestData.incomes[3]],
-      costs: [TestData.costs[0], TestData.costs[1], TestData.costs[2], TestData.costs[3]], balance: -540.74
+      id: 1, name: 'My cashbook'
     }
   ];
 }

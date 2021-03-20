@@ -5,6 +5,7 @@ import {DataHandlerService} from '../../service/data-handler.service';
 import {EditIncomeDialogComponent} from '../../dialog/edit-income-dialog/edit-income-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
+import {TestData} from '../../data/TestData';
 
 @Component({
   selector: 'app-income',
@@ -43,8 +44,8 @@ export class IncomeComponent implements OnInit {
 
   findIncomeByCashbookId(cashbook: Cashbook): Income[] {
     // tslint:disable-next-line:only-arrow-functions typedef
-    return this.incomes.filter(function(el) {
-      return el.cashbookId === cashbook.id;
+    return this.incomes.filter(function(income) {
+      return income.cashbookId === cashbook.id;
     });
   }
 
@@ -55,10 +56,6 @@ export class IncomeComponent implements OnInit {
         this.updateIncome.emit(income);
         return;
       }
-      if (result === 'delete') {
-        this.deleteIncome.emit(income);
-        return;
-      }
     });
   }
 
@@ -67,7 +64,7 @@ export class IncomeComponent implements OnInit {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Confirm your action',
-        message: `Are you sure to delete income: ${income.flowPurpose}?`
+        message: `Are you sure to delete income: "${income.flowPurpose}"?`
       },
       autoFocus: false
     });
@@ -78,7 +75,7 @@ export class IncomeComponent implements OnInit {
     });
   }
 
-  openAddTaskDialog(cashbook: Cashbook): void {
+  openAddIncomeDialog(cashbook: Cashbook): void {
     const income = new Income(null, '', null, null, cashbook.id, '', false);
     const dialogRef = this.dialog.open(EditIncomeDialogComponent, {data: [income, 'Add income']});
     dialogRef.afterClosed().subscribe(result => {

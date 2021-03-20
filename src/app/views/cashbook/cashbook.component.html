@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-header" *ngFor="let cashbook of cashbooks">
           <a class="card-link" data-toggle="collapse" href="#accordion21">{{cashbook.name}}
-            (balance: {{'$' + cashbook.balance}})</a>
+            (balance: {{'$' + cashbookBalanceCounter(cashbook)}})</a>
         </div>
         <div id="accordion21" class="collapse show" data-parent="#accordion2">
           <div class="row">
@@ -19,7 +19,11 @@
             </div>
             <div class="col-md-6">
               <app-costs [cashbooks]="cashbooks"
-                         [costs]="costs"></app-costs>
+                         [costs]="costs"
+                         (updateCost)="onUpdateCosts($event)"
+                         (deleteCost)="onDeleteCosts($event)"
+                         (addCost)="onAddCost($event)">
+              </app-costs>
             </div>
           </div>
         </div>

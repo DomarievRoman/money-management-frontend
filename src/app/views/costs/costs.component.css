@@ -1,0 +1,13 @@
+.notFullPaid {
+  color: #bd2130;
+}
+.pointer {
+  cursor: pointer;
+}
+
+.add-costs-btn{
+  width: 100%;
+  color: white;
+  background-color: #5fa76f;
+}
+
