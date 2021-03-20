@@ -5,7 +5,6 @@ import {DataHandlerService} from '../../service/data-handler.service';
 import {EditIncomeDialogComponent} from '../../dialog/edit-income-dialog/edit-income-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
-import {TestData} from '../../data/TestData';
 
 @Component({
   selector: 'app-income',
@@ -26,6 +25,9 @@ export class IncomeComponent implements OnInit {
   @Output()
   deleteIncome = new EventEmitter<Income>();
 
+  @Output()
+  addIncome = new EventEmitter<Income>();
+
   constructor(private dataHandler: DataHandlerService, private dialog: MatDialog) {
 
   }
@@ -37,7 +39,6 @@ export class IncomeComponent implements OnInit {
   toggleIncomeRegular(income: Income): void {
     income.regular = !income.regular;
     this.updateIncome.emit(income);
-    console.log(income);
   }
 
   findIncomeByCashbookId(cashbook: Cashbook): Income[] {
@@ -73,6 +74,16 @@ export class IncomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deleteIncome.emit(income);
+      }
+    });
+  }
+
+  openAddTaskDialog(cashbook: Cashbook): void {
+    const income = new Income(null, '', null, null, cashbook.id, '', false);
+    const dialogRef = this.dialog.open(EditIncomeDialogComponent, {data: [income, 'Add income']});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addIncome.emit(income);
       }
     });
   }

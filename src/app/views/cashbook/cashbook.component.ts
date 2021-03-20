@@ -3,7 +3,6 @@ import {DataHandlerService} from '../../service/data-handler.service';
 import {Cashbook} from '../../model/Cashbook';
 import {Income} from '../../model/Income';
 import {Costs} from '../../model/Costs';
-import {TestData} from '../../data/TestData';
 
 @Component({
   selector: 'app-cashbook',
@@ -30,5 +29,17 @@ export class CashbookComponent implements OnInit {
 
   onDeleteIncome(income: Income): void {
     this.dataHandler.deleteIncome(income.id);
+  }
+
+  updateIncome(): void {
+    this.dataHandler.getIncomeData().subscribe((incomes: Income[]) => {
+      this.incomes = incomes;
+    });
+  }
+
+  onAddIncome(income: Income): void {
+    this.dataHandler.addIncome(income).subscribe(() => {
+      this.updateIncome();
+    });
   }
 }

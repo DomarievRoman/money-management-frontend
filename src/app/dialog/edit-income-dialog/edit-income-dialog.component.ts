@@ -42,13 +42,13 @@ export class EditIncomeDialogComponent implements OnInit {
 
   getErrorMessage(): string {
     if (this.paymentValidValue.hasError('required')) {
-      return 'You must enter a value';
+      return 'You must enter a valid value';
     }
     if (this.purposeValidValue.hasError('required')) {
-      return 'You must enter a value';
+      return 'You must enter a valid value';
     }
     if (this.dateValidValue.hasError('required')) {
-      return 'You must enter a value';
+      return 'You must enter a valid value';
     }
   }
 

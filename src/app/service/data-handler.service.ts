@@ -31,4 +31,8 @@ export class DataHandlerService {
   deleteIncome(id: number): Observable<Income> {
     return this.incomeDao.delete(id);
   }
+
+  addIncome(income: Income): Observable<Income> {
+    return this.incomeDao.add(income);
+  }
 }

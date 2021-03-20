@@ -13,7 +13,9 @@
               <app-income [cashbooks]="cashbooks"
                           [incomes]="incomes"
                           (updateIncome)="onUpdateIncome($event)"
-                          (deleteIncome)="onDeleteIncome($event)"></app-income>
+                          (deleteIncome)="onDeleteIncome($event)"
+                          (addIncome)="onAddIncome($event)">
+              </app-income>
             </div>
             <div class="col-md-6">
               <app-costs [cashbooks]="cashbooks"

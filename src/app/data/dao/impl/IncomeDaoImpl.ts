@@ -4,8 +4,12 @@ import {Income} from '../../../model/Income';
 import {TestData} from '../../TestData';
 
 export class IncomeDaoImpl implements IncomeDao {
-  add(T): Observable<Income> {
-    return undefined;
+  add(income: Income): Observable<Income> {
+    if (income.id === null || income.id === 0) {
+      income.id = this.getLastIncomeId();
+    }
+    TestData.incomes.push(income);
+    return of(income);
   }
 
   delete(id: number): Observable<Income> {
@@ -26,5 +30,9 @@ export class IncomeDaoImpl implements IncomeDao {
     const incomeTmp = TestData.incomes.find(t => t.id === income.id);
     TestData.incomes.splice(TestData.incomes.indexOf(incomeTmp), 1, income);
     return of(income);
+  }
+
+  getLastIncomeId(): number {
+    return Math.max.apply(Math, TestData.incomes.map(income => income.id)) + 1;
   }
 }
