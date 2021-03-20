@@ -27,12 +27,12 @@
   padding-bottom: 20px;
 }
 
-.mat-raised-button {
+.confirm-btn {
   color: white;
   background-color: #5fa76f;
 }
 
-.discard_btn {
+.discard-btn {
   color: white;
   background-color: #bf5959;
 }

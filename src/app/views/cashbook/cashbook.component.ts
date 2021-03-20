@@ -26,11 +26,9 @@ export class CashbookComponent implements OnInit {
 
   onUpdateIncome(income: Income): void {
     this.dataHandler.updateIncome(income);
-    console.log(TestData.cashbooks);
   }
 
   onDeleteIncome(income: Income): void {
     this.dataHandler.deleteIncome(income.id);
-    console.log(TestData.incomes);
   }
 }

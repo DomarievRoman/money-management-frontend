@@ -25,7 +25,6 @@ export class IncomeDaoImpl implements IncomeDao {
   update(income: Income): Observable<Income> {
     const incomeTmp = TestData.incomes.find(t => t.id === income.id);
     TestData.incomes.splice(TestData.incomes.indexOf(incomeTmp), 1, income);
-    console.log(income);
     return of(income);
   }
 }

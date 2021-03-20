@@ -64,21 +64,4 @@ export class EditIncomeDialogComponent implements OnInit {
   onCancel(): void {
     this.dialogRef.close(null);
   }
-
-  delete(): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '500px',
-      data: {
-        dialogTitle: 'Confirm your action',
-        message: 'Are you sure to delete income?'
-      },
-      autoFocus: false
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dialogRef.close('delete');
-      }
-    });
-  }
 }

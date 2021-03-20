@@ -13,7 +13,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let income of cashbook.income; let i = index" [class.regular]="income.regular">
+      <tr *ngFor="let income of findIncomeByCashbookId(cashbook) let i = index" [class.regular]="income.regular">
         <th class="pointer" (click)="openEditIncomeDialog(income) " scope="row">{{i + 1}}</th>
         <td class="pointer"
             (click)="openEditIncomeDialog(income)">{{income.flowPurpose.trim() != '' ? income.flowPurpose : 'None'}}</td>
@@ -32,7 +32,7 @@
             </div>
           </div>
         </td>
-        <td><em class="ti-trash" (click)="deleteIncomeDialog(income)"></em></td>
+        <td><em class="ti-trash" (click)="openDeleteIncomeDialog(income)"></em></td>
       </tr>
       </tbody>
     </table>
