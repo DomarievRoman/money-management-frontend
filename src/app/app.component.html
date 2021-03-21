@@ -26,7 +26,9 @@
     <div class="main-content-inner">
       <div class="row">
         <div class="col-lg-11 mt-5">
-          <app-cashbook [cashbooks]="cashbooks"></app-cashbook>
+          <app-cashbook [cashbooks]="cashbooks"
+                        (addCashbook)="onAddCashbook($event)">
+          </app-cashbook>
         </div>
       </div>
     </div>

@@ -22,6 +22,7 @@ import localeEn from '@angular/common/locales/en-001';
 import {MatCheckbox, MatCheckboxModule} from '@angular/material/checkbox';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { EditCostsDialogComponent } from './dialog/edit-costs-dialog/edit-costs-dialog.component';
+import { EditCashbookDialogComponent } from './dialog/edit-cashbook-dialog/edit-cashbook-dialog.component';
 
 registerLocaleData(localeEn);
 
@@ -34,7 +35,8 @@ registerLocaleData(localeEn);
     EditIncomeDialogComponent,
     CashbookDatePipePipe,
     ConfirmDialogComponent,
-    EditCostsDialogComponent
+    EditCostsDialogComponent,
+    EditCashbookDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,9 @@ registerLocaleData(localeEn);
   providers: [],
   entryComponents: [
     EditIncomeDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    EditCostsDialogComponent,
+    EditCashbookDialogComponent
   ],
   bootstrap: [AppComponent]
 })

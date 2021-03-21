@@ -6,9 +6,22 @@
   cursor: pointer;
 }
 
-.add-income-btn{
+.add-income-btn {
   width: 100%;
   color: white;
   background-color: #5fa76f;
 }
 
+hr {
+  background-color: #5fa76f;
+}
+
+.delete-cashbook {
+  color: #bd2130;
+  bottom: 12px;
+  left: 96%;
+}
+
+h6 {
+  position: absolute;
+}

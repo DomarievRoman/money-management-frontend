@@ -6,6 +6,7 @@ import {EditIncomeDialogComponent} from '../../dialog/edit-income-dialog/edit-in
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
 import {TestData} from '../../data/TestData';
+import {EditCashbookDialogComponent} from '../../dialog/edit-cashbook-dialog/edit-cashbook-dialog.component';
 
 @Component({
   selector: 'app-income',
@@ -29,6 +30,12 @@ export class IncomeComponent implements OnInit {
   @Output()
   addIncome = new EventEmitter<Income>();
 
+  @Output()
+  deleteCashbook = new EventEmitter<Cashbook>();
+
+  @Output()
+  updateCashbook = new EventEmitter<Cashbook>();
+
   constructor(private dataHandler: DataHandlerService, private dialog: MatDialog) {
 
   }
@@ -40,6 +47,9 @@ export class IncomeComponent implements OnInit {
   toggleIncomeRegular(income: Income): void {
     income.regular = !income.regular;
     this.updateIncome.emit(income);
+    console.log(TestData.cashbooks);
+    console.log(TestData.incomes);
+    console.log(TestData.costs);
   }
 
   findIncomeByCashbookId(cashbook: Cashbook): Income[] {
@@ -81,6 +91,32 @@ export class IncomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.addIncome.emit(income);
+      }
+    });
+  }
+
+  openDeleteCashbookDialog(cashbook: Cashbook): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '500px',
+      data: {
+        dialogTitle: 'Confirm your action',
+        message: `Are you sure to delete cashbook: "${cashbook.name}"?`
+      },
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteCashbook.emit(cashbook);
+      }
+    });
+  }
+
+  openEditCashbookDialog(cashbook: Cashbook): void {
+    const dialogRef = this.dialog.open(EditCashbookDialogComponent, {data: [cashbook.name, 'Edit cashbook data'], width: '400px'});
+    dialogRef.afterClosed().subscribe(result => {
+      if (typeof (result) === 'string') {
+        cashbook.name = result as string;
+        this.updateCashbook.emit(cashbook);
       }
     });
   }

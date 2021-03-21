@@ -83,4 +83,18 @@ export class CostsComponent implements OnInit {
       }
     });
   }
+
+
+  cashbookBalanceCounter(cashbookId: number): number {
+    const incomeSum = TestData.incomes.filter(income => income.cashbookId === cashbookId).filter(income => income.payment)
+      .reduce((sum, cur) => sum + cur.payment, 0);
+    const costsSum = TestData.costs.filter(income => income.cashbookId === cashbookId).filter(cost => cost.payment)
+      .reduce((sum, cur) => sum + cur.payment, 0);
+    this.cashbooks.filter(c => c.id === cashbookId).filter(d => d.balance = incomeSum - costsSum);
+    return this.round(this.cashbooks.find(c => c.id === cashbookId).balance);
+  }
+
+  private round(num: number): number {
+    return Math.round(num * 100) / 100;
+  }
 }

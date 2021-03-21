@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataHandlerService} from '../../service/data-handler.service';
 import {Cashbook} from '../../model/Cashbook';
 import {Income} from '../../model/Income';
 import {Costs} from '../../model/Costs';
-import {TestData} from '../../data/TestData';
+import {MatDialog} from '@angular/material/dialog';
+import {EditCashbookDialogComponent} from '../../dialog/edit-cashbook-dialog/edit-cashbook-dialog.component';
 
 @Component({
   selector: 'app-cashbook',
@@ -17,21 +18,13 @@ export class CashbookComponent implements OnInit {
   incomes: Income[];
   costs: Costs[];
 
-  constructor(private dataHandler: DataHandlerService) {
+  @Output()
+  addCashbook = new EventEmitter<string>();
+
+  constructor(private dataHandler: DataHandlerService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-  }
-
-  cashbookBalanceCounter(cashbook: Cashbook): number {
-    const incomeSum = TestData.incomes.filter(income => income.payment).reduce((sum, cur) => sum + cur.payment, 0);
-    const costsSum = TestData.costs.filter(cost => cost.payment).reduce((sum, cur) => sum + cur.payment, 0);
-    cashbook.balance = incomeSum - costsSum;
-    return this.round(cashbook.balance);
-  }
-
-  private round(num: number): number {
-    return Math.round(num * 100) / 100;
   }
 
   onUpdateIncome(income: Income): void {
@@ -72,5 +65,22 @@ export class CashbookComponent implements OnInit {
     this.dataHandler.getCostsData().subscribe((costs: Costs[]) => {
       this.costs = costs;
     });
+  }
+
+  openAddCashbookDialog(): void {
+    const dialogRef = this.dialog.open(EditCashbookDialogComponent, {data: ['', 'Add cashbook'], width: '400px'});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addCashbook.emit(result as string);
+      }
+    });
+  }
+
+  onDeleteCashbook(cashbook: Cashbook): void {
+    this.dataHandler.deleteCashbook(cashbook.id);
+  }
+
+  onUpdateCashbook(cashbook: Cashbook): void {
+    this.dataHandler.updateCashbook(cashbook);
   }
 }

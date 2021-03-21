@@ -11,3 +11,16 @@
   background-color: #5fa76f;
 }
 
+hr {
+  background-color: #5fa76f;
+}
+
+.delete-cashbook {
+  color: white;
+  bottom: 12px;
+  left: 300px;
+}
+
+h6 {
+  position: absolute;
+}

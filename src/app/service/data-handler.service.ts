@@ -54,4 +54,16 @@ export class DataHandlerService {
   addCost(cost: Costs): Observable<Costs> {
     return this.costsDao.add(cost);
   }
+
+  addCashbook(name: string): Observable<Cashbook> {
+    return this.cashbookDao.add(new Cashbook(null, name, 0));
+  }
+
+  deleteCashbook(id: number): Observable<Cashbook> {
+    return this.cashbookDao.delete(id);
+  }
+
+  updateCashbook(cashbook: Cashbook): Observable<Cashbook> {
+    return this.cashbookDao.update(cashbook);
+  }
 }

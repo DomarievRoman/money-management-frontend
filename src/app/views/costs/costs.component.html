@@ -1,4 +1,8 @@
 <div class="single-table" *ngFor="let cashbook of cashbooks">
+  <h6>Balance: {{'$' + cashbookBalanceCounter(cashbook.id)}}</h6>
+  <button mat-icon-button class="delete-cashbook">
+    <mat-icon>delete</mat-icon>
+  </button>
   <div>
     <button mat-flat-button class="add-costs-btn" (click)="openAddCostDialog(cashbook)">Add</button>
   </div>
@@ -39,4 +43,5 @@
       </tbody>
     </table>
   </div>
+  <hr>
 </div>

@@ -1,12 +1,12 @@
 <div class="card">
   <div class="card-body">
+    <div class="cashbook-header">
     <h4 class="header-title">Cashbooks</h4>
+    </div>
+    <button mat-icon-button class="add-cashbook" (click)="openAddCashbookDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
     <div id="accordion2" class="according accordion-s2">
-      <div class="card">
-        <div class="card-header" *ngFor="let cashbook of cashbooks">
-          <a class="card-link" data-toggle="collapse" href="#accordion21">{{cashbook.name}}
-            (balance: {{'$' + cashbookBalanceCounter(cashbook)}})</a>
-        </div>
         <div id="accordion21" class="collapse show" data-parent="#accordion2">
           <div class="row">
             <div class="col-md-6">
@@ -14,7 +14,9 @@
                           [incomes]="incomes"
                           (updateIncome)="onUpdateIncome($event)"
                           (deleteIncome)="onDeleteIncome($event)"
-                          (addIncome)="onAddIncome($event)">
+                          (addIncome)="onAddIncome($event)"
+                          (deleteCashbook)="onDeleteCashbook($event)"
+                          (updateCashbook)="onUpdateCashbook($event)">
               </app-income>
             </div>
             <div class="col-md-6">
@@ -29,5 +31,4 @@
         </div>
       </div>
     </div>
-  </div>
 </div>

@@ -1,0 +1,23 @@
+<mat-dialog-content>
+  <p mat-dialog-title>{{dialogTitle}}</p>
+  <mat-form-field>
+    <mat-label>Cashbook name</mat-label>
+    <input required #inputName matInput [(ngModel)]="cashbookName" [formControl]="nameValidValue">
+    <mat-error *ngIf="nameValidValue.invalid">{{getErrorMessage()}}</mat-error>
+
+    <button *ngIf="cashbookName.trim().length > 0" mat-button matSuffix mat-icon-button aria-label="clear"
+            (click)="cashbookName=''" class="dialog-cashbook-name">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+
+
+  <mat-dialog-actions>
+    <button mat-raised-button class="confirm-btn" (click)="onConfirm()"
+            [disabled]="inputName.value.trim().length === 0">
+      Save
+    </button>
+
+    <button class="discard-btn" mat-raised-button (click)="onCancel()">Discard</button>
+  </mat-dialog-actions>
+</mat-dialog-content>

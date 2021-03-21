@@ -1,4 +1,8 @@
 <div class="single-table" *ngFor="let cashbook of cashbooks">
+  <h6 title="Click to edit cashbook" class="pointer" (click)="openEditCashbookDialog(cashbook)">{{cashbook.name}}</h6>
+  <button mat-icon-button class="delete-cashbook" (click)="openDeleteCashbookDialog(cashbook)">
+    <mat-icon>delete</mat-icon>
+  </button>
   <div>
     <button mat-flat-button class="add-income-btn" (click)="openAddIncomeDialog(cashbook)">Add</button>
   </div>
@@ -40,4 +44,5 @@
       </tbody>
     </table>
   </div>
+  <hr>
 </div>

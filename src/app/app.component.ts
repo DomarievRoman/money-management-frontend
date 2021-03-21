@@ -17,4 +17,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.dataHandler.getCashbookData().subscribe(cashbooks => this.cashbooks = cashbooks);
   }
+
+  onAddCashbook(name: string): void {
+    this.dataHandler.addCashbook(name).subscribe(() => this.updateCashbooks());
+  }
+
+  updateCashbooks(): void {
+      this.dataHandler.getCashbookData().subscribe(cashbooks => this.cashbooks = cashbooks);
+  }
 }
