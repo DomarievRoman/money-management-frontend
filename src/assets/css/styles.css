@@ -145,10 +145,6 @@
   font-family: 'lato', sans-serif;
 }
 
-.fw-icons a:hover {
-  color: #007BFF;
-}
-
 .fw-icons a i {
   width: 30px;
   font-size: 14px;
@@ -198,10 +194,6 @@
 .icon-container:hover span.icon-name {
   -webkit-transform: translateX(10px);
   transform: translateX(10px);
-}
-
-.icon-container:hover span {
-  color: #007BFF;
 }
 
 /*-------------------- 19. Table Basic ------------------- */

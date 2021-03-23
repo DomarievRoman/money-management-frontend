@@ -3,8 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {CashbookComponent} from './views/cashbook/cashbook.component';
-import {IncomeComponent} from './views/income/income.component';
-import {CostsComponent} from './views/costs/costs.component';
 import {EditIncomeDialogComponent} from './dialog/edit-income-dialog/edit-income-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -23,6 +21,7 @@ import {MatCheckbox, MatCheckboxModule} from '@angular/material/checkbox';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { EditCostsDialogComponent } from './dialog/edit-costs-dialog/edit-costs-dialog.component';
 import { EditCashbookDialogComponent } from './dialog/edit-cashbook-dialog/edit-cashbook-dialog.component';
+import { IncomeCostComponent } from './views/income-cost/income-cost.component';
 
 registerLocaleData(localeEn);
 
@@ -30,13 +29,12 @@ registerLocaleData(localeEn);
   declarations: [
     AppComponent,
     CashbookComponent,
-    IncomeComponent,
-    CostsComponent,
     EditIncomeDialogComponent,
     CashbookDatePipePipe,
     ConfirmDialogComponent,
     EditCostsDialogComponent,
-    EditCashbookDialogComponent
+    EditCashbookDialogComponent,
+    IncomeCostComponent
   ],
   imports: [
     BrowserModule,

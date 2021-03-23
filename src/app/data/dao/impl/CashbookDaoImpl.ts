@@ -15,10 +15,16 @@ export class CashbookDaoImpl implements CashbookDao {
   delete(id: number): Observable<Cashbook> {
     const cashbookTmp = TestData.cashbooks.find(t => t.id === id);
     const incomesTmp = TestData.incomes.find(t => t.cashbookId === id);
+    console.log(incomesTmp);
     const costsTmp = TestData.costs.find(t => t.cashbookId === id);
+    console.log(costsTmp);
     TestData.cashbooks.splice(TestData.cashbooks.indexOf(cashbookTmp), 1);
-    TestData.incomes.splice(TestData.incomes.indexOf(incomesTmp));
-    TestData.costs.splice(TestData.costs.indexOf(costsTmp));
+    if (incomesTmp !== undefined) {
+      TestData.incomes.splice(TestData.incomes.indexOf(incomesTmp));
+    }
+    if (costsTmp !== undefined) {
+      TestData.costs.splice(TestData.costs.indexOf(costsTmp));
+    }
     return of(cashbookTmp);
   }
 

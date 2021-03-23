@@ -1,25 +1,29 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Income} from '../../model/Income';
 import {Cashbook} from '../../model/Cashbook';
+import {Income} from '../../model/Income';
 import {DataHandlerService} from '../../service/data-handler.service';
-import {EditIncomeDialogComponent} from '../../dialog/edit-income-dialog/edit-income-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
 import {TestData} from '../../data/TestData';
+import {EditIncomeDialogComponent} from '../../dialog/edit-income-dialog/edit-income-dialog.component';
+import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
 import {EditCashbookDialogComponent} from '../../dialog/edit-cashbook-dialog/edit-cashbook-dialog.component';
+import {Costs} from '../../model/Costs';
+import {EditCostsDialogComponent} from '../../dialog/edit-costs-dialog/edit-costs-dialog.component';
 
 @Component({
-  selector: 'app-income',
-  templateUrl: './income.component.html',
-  styleUrls: ['./income.component.css']
+  selector: 'app-income-cost',
+  templateUrl: './income-cost.component.html',
+  styleUrls: ['./income-cost.component.css']
 })
-export class IncomeComponent implements OnInit {
-
+export class IncomeCostComponent implements OnInit {
   @Input()
   cashbooks: Cashbook[];
 
   @Input()
   incomes: Income[];
+
+  @Input()
+  costs: Costs[];
 
   @Output()
   updateIncome = new EventEmitter<Income>();
@@ -36,12 +40,22 @@ export class IncomeComponent implements OnInit {
   @Output()
   updateCashbook = new EventEmitter<Cashbook>();
 
+  @Output()
+  updateCost = new EventEmitter<Costs>();
+
+  @Output()
+  deleteCost = new EventEmitter<Costs>();
+
+  @Output()
+  addCost = new EventEmitter<Costs>();
+
   constructor(private dataHandler: DataHandlerService, private dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
     this.dataHandler.getIncomeData().subscribe(incomes => this.incomes = incomes);
+    this.dataHandler.getCostsData().subscribe(costs => this.costs = costs);
   }
 
   toggleIncomeRegular(income: Income): void {
@@ -119,5 +133,67 @@ export class IncomeComponent implements OnInit {
         this.updateCashbook.emit(cashbook);
       }
     });
+  }
+
+  toggleCostFullPaid(cost: Costs): void {
+    cost.fullPaid = !cost.fullPaid;
+  }
+
+
+  findCostsByCashbookId(cashbook: Cashbook): Costs[] {
+    // tslint:disable-next-line:only-arrow-functions typedef
+    return this.costs.filter(function(cost) {
+      return cost.cashbookId === cashbook.id;
+    });
+  }
+
+  openEditCostsDialog(costs: Costs): void {
+    const dialogRef = this.dialog.open(EditCostsDialogComponent, {data: [costs, 'Edit cost data'], autoFocus: false});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result as Costs) {
+        this.updateCost.emit(costs);
+        return;
+      }
+    });
+  }
+
+  openDeleteCostDialog(cost: Costs): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '500px',
+      data: {
+        dialogTitle: 'Confirm your action',
+        message: `Are you sure to delete cost: "${cost.flowPurpose}"?`
+      },
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteCost.emit(cost);
+      }
+    });
+  }
+
+  openAddCostDialog(cashbook: Cashbook): void {
+    const cost = new Costs(null, '', null, null, cashbook.id, '', false);
+    const dialogRef = this.dialog.open(EditCostsDialogComponent, {data: [cost, 'Add cost']});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addCost.emit(cost);
+      }
+    });
+  }
+
+
+  cashbookBalanceCounter(cashbookId: number): number {
+    const incomeSum = TestData.incomes.filter(income => income.cashbookId === cashbookId).filter(income => income.payment)
+      .reduce((sum, cur) => sum + cur.payment, 0);
+    const costsSum = TestData.costs.filter(income => income.cashbookId === cashbookId).filter(cost => cost.payment)
+      .reduce((sum, cur) => sum + cur.payment, 0);
+    this.cashbooks.filter(c => c.id === cashbookId).filter(d => d.balance = incomeSum - costsSum);
+    return this.round(this.cashbooks.find(c => c.id === cashbookId).balance);
+  }
+
+  private round(num: number): number {
+    return Math.round(num * 100) / 100;
   }
 }
