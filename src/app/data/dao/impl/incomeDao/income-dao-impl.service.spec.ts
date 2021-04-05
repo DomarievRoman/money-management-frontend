@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DataHandlerService } from './data-handler.service';
+import { IncomeDaoImplService } from './income-dao-impl.service';
 
-describe('DataHandlerService', () => {
-  let service: DataHandlerService;
+describe('IncomeDaoImplService', () => {
+  let service: IncomeDaoImplService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DataHandlerService);
+    service = TestBed.inject(IncomeDaoImplService);
   });
 
   it('should be created', () => {
