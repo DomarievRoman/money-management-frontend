@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DataHandlerService} from './service/data-handler.service';
 import {Cashbook} from './model/Cashbook';
+import {CashbookDaoImplService} from './data/dao/impl/cashbookDao/cashbook-dao-impl.service';
+import {Costs} from './model/Costs';
+import {Income} from './model/Income';
 
 @Component({
   selector: 'app-root',
@@ -10,19 +12,25 @@ import {Cashbook} from './model/Cashbook';
 export class AppComponent implements OnInit {
   title = 'Financial Project';
   cashbooks: Cashbook[];
+  incomes: Income[];
+  costs: Costs[];
 
-  constructor(private dataHandler: DataHandlerService) {
+  constructor(private cashbookService: CashbookDaoImplService) {
   }
 
   ngOnInit(): void {
-    this.dataHandler.getCashbookData().subscribe(cashbooks => this.cashbooks = cashbooks);
+    this.fillAllCashbooks();
   }
 
-  onAddCashbook(name: string): void {
-    this.dataHandler.addCashbook(name).subscribe(() => this.updateCashbooks());
+  fillAllCashbooks(): void {
+    this.cashbookService.getAll().subscribe(result => {
+      this.cashbooks = result;
+    });
   }
 
-  updateCashbooks(): void {
-      this.dataHandler.getCashbookData().subscribe(cashbooks => this.cashbooks = cashbooks);
+  onAddCashbook(cashbook: Cashbook): void {
+    this.cashbookService.add(cashbook).subscribe(() => {
+      this.fillAllCashbooks();
+    });
   }
 }

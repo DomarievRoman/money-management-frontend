@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Income} from '../../model/Income';
-import {DataHandlerService} from '../../service/data-handler.service';
 import {FormControl, Validators} from '@angular/forms';
-import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
+import {DialogAction, DialogResult} from '../../dialogResult/DialogResult';
+
 
 @Component({
   selector: 'app-edit-income-dialog',
@@ -13,9 +13,7 @@ import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component
 export class EditIncomeDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<EditIncomeDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private data: [Income, string],
-              private dataHandler: DataHandlerService,
-              private dialog: MatDialog) {
+              @Inject(MAT_DIALOG_DATA) private data: [Income, string]) {
   }
 
   dialogTitle: string;
@@ -42,13 +40,13 @@ export class EditIncomeDialogComponent implements OnInit {
 
   getErrorMessage(): string {
     if (this.paymentValidValue.hasError('required')) {
-      return 'You must enter a valid value';
+      return 'Invalid value';
     }
     if (this.purposeValidValue.hasError('required')) {
-      return 'You must enter a valid value';
+      return 'Invalid value';
     }
     if (this.dateValidValue.hasError('required')) {
-      return 'You must enter a valid value';
+      return 'Invalid value';
     }
   }
 
@@ -58,10 +56,10 @@ export class EditIncomeDialogComponent implements OnInit {
     this.income.payment = this.tmpPayment;
     this.income.from = this.tmpFrom;
     this.income.regular = this.tmpRegular;
-    this.dialogRef.close(this.income);
+    this.dialogRef.close(new DialogResult(DialogAction.SAVE, this.income));
   }
 
   onCancel(): void {
-    this.dialogRef.close(null);
+    this.dialogRef.close(new DialogResult(DialogAction.CANCEL));
   }
 }

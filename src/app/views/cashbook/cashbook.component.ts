@@ -1,10 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DataHandlerService} from '../../service/data-handler.service';
 import {Cashbook} from '../../model/Cashbook';
 import {Income} from '../../model/Income';
 import {Costs} from '../../model/Costs';
 import {MatDialog} from '@angular/material/dialog';
 import {EditCashbookDialogComponent} from '../../dialog/edit-cashbook-dialog/edit-cashbook-dialog.component';
+import {CashbookDaoImplService} from '../../data/dao/impl/cashbookDao/cashbook-dao-impl.service';
+import {CostsDaoImplService} from '../../data/dao/impl/costsDao/costs-dao-impl.service';
+import {IncomeDaoImplService} from '../../data/dao/impl/incomeDao/income-dao-impl.service';
+import {DialogAction} from '../../dialogResult/DialogResult';
 
 @Component({
   selector: 'app-cashbook',
@@ -19,68 +22,98 @@ export class CashbookComponent implements OnInit {
   costs: Costs[];
 
   @Output()
-  addCashbook = new EventEmitter<string>();
+  addCashbook = new EventEmitter<Cashbook>();
 
-  constructor(private dataHandler: DataHandlerService, private dialog: MatDialog) {
+  constructor(private cashbookService: CashbookDaoImplService, private incomeService: IncomeDaoImplService,
+              private costsService: CostsDaoImplService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.fillAllIncomes();
+    this.fillAllCosts();
   }
 
-  onUpdateIncome(income: Income): void {
-    this.dataHandler.updateIncome(income);
-  }
-
-  onDeleteIncome(income: Income): void {
-    this.dataHandler.deleteIncome(income.id);
-  }
-
-  updateIncome(): void {
-    this.dataHandler.getIncomeData().subscribe((incomes: Income[]) => {
-      this.incomes = incomes;
+  fillAllCashbooks(): void {
+    this.cashbookService.getAll().subscribe((cashbooks: Cashbook[]) => {
+      this.cashbooks = cashbooks;
     });
   }
 
-  onAddIncome(income: Income): void {
-    this.dataHandler.addIncome(income).subscribe(() => {
-      this.updateIncome();
+  fillAllIncomes(): void {
+    this.incomeService.getAll().subscribe(result => {
+      this.incomes = result;
     });
   }
 
-  onUpdateCosts(costs: Costs): void {
-    this.dataHandler.updateCosts(costs);
-  }
-
-  onDeleteCosts(cost: Costs): void {
-    this.dataHandler.deleteCost(cost.id);
-  }
-
-  onAddCost(cost: Costs): void {
-    this.dataHandler.addCost(cost).subscribe(() => {
-      this.updateCost();
+  fillAllCosts(): void {
+    this.costsService.getAll().subscribe(result => {
+      this.costs = result;
     });
   }
 
-  updateCost(): void {
-    this.dataHandler.getCostsData().subscribe((costs: Costs[]) => {
-      this.costs = costs;
-    });
-  }
-
-  openAddCashbookDialog(): void {
-    const dialogRef = this.dialog.open(EditCashbookDialogComponent, {data: ['', 'Add cashbook'], width: '400px'});
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.addCashbook.emit(result as string);
-      }
+  onUpdateCashbook(cashbook: Cashbook): void {
+    this.cashbookService.update(cashbook).subscribe(() => {
+      this.fillAllCashbooks();
     });
   }
 
   onDeleteCashbook(cashbook: Cashbook): void {
-    this.dataHandler.deleteCashbook(cashbook.id);
+    this.cashbookService.delete(cashbook.id).subscribe(() => {
+      this.fillAllCashbooks();
+    });
   }
 
-  onUpdateCashbook(cashbook: Cashbook): void {
-    this.dataHandler.updateCashbook(cashbook);
+  onAddIncome(income: Income): void {
+    this.incomeService.add(income).subscribe(() => {
+      this.fillAllIncomes();
+      this.fillAllCashbooks();
+    });
+  }
+
+  onUpdateIncome(income: Income): void {
+    this.incomeService.update(income).subscribe(() => {
+      this.fillAllIncomes();
+      this.fillAllCashbooks();
+    });
+  }
+
+  onDeleteIncome(income: Income): void {
+    this.incomeService.delete(income.id).subscribe(() => {
+      this.fillAllIncomes();
+      this.fillAllCashbooks();
+    });
+  }
+
+  onAddCost(cost: Costs): void {
+    this.costsService.add(cost).subscribe(() => {
+      this.fillAllCosts();
+      this.fillAllCashbooks();
+    });
+  }
+
+  onUpdateCosts(costs: Costs): void {
+    this.costsService.update(costs).subscribe(() => {
+      this.fillAllCosts();
+      this.fillAllCashbooks();
+    });
+  }
+
+  onDeleteCosts(cost: Costs): void {
+    this.costsService.delete(cost.id).subscribe(() => {
+      this.fillAllCosts();
+      this.fillAllCashbooks();
+    });
+  }
+
+  openAddCashbookDialog(): void {
+    const dialogRef = this.dialog.open(EditCashbookDialogComponent, {data: [new Cashbook(null, ''), 'Add cashbook'], width: '400px'});
+    dialogRef.afterClosed().subscribe(result => {
+      if (!(result)) {
+        return;
+      }
+      if (result.action === DialogAction.SAVE) {
+        this.addCashbook.emit(result.obj as Cashbook);
+      }
+    });
   }
 }

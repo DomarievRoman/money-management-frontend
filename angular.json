@@ -26,9 +26,7 @@
             "styles": [
               "src/styles.css",
               "src/assets/css/bootstrap.min.css",
-              "src/assets/css/default-css.css",
               "src/assets/css/font-awesome.min.css",
-              "src/assets/css/responsive.css",
               "src/assets/css/styles.css",
               "src/assets/css/themify-icons.css",
               "src/assets/css/typography.css",

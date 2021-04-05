@@ -1,98 +1,112 @@
-<div class="single-table" *ngFor="let cashbook of cashbooks">
-  <h6 title="Click to edit cashbook" class="cashbook-name" (click)="openEditCashbookDialog(cashbook)">{{cashbook.name}}</h6>
-  <h6 class="balance">Balance: {{'$' + cashbookBalanceCounter(cashbook.id)}}</h6>
-  <button mat-icon-button class="delete-cashbook" (click)="openDeleteCashbookDialog(cashbook)">
-    <mat-icon>delete</mat-icon>
-  </button>
-  <div class="row">
-    <div class="col-md-6">
-      <div>
-        <button mat-flat-button class="add-income-btn" (click)="openAddIncomeDialog(cashbook)">Add</button>
-      </div>
-      <div class="table-responsive">
-        <table class="table text-center">
-          <thead class="text-uppercase bg-light">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Income Purpose</th>
-            <th scope="col">Payment</th>
-            <th scope="col">From</th>
-            <th scope="col">Date</th>
-            <th scope="col">Regular</th>
-            <th scope="col">Action</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let income of findIncomeByCashbookId(cashbook) let i = index" [class.regular]="income.regular">
-            <th class="pointer" (click)="openEditIncomeDialog(income) " scope="row">{{i + 1}}</th>
-            <td class="pointer"
-                (click)="openEditIncomeDialog(income)">{{income.flowPurpose.trim() != '' ? income.flowPurpose : 'None'}}</td>
-            <td class="pointer" (click)="openEditIncomeDialog(income)">{{'$' + income.payment}}</td>
-            <td class="pointer"
-                (click)="openEditIncomeDialog(income)">{{income.from.trim() != '' ? income.from : 'None'}}</td>
-            <td class="pointer"
-                (click)="openEditIncomeDialog(income)">{{income.transactionDate | cashbookDatePipe }}</td>
-            <td>
-              <div class="form-check">
-                <div class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="" [checked]="income.regular"
-                         (click)="toggleIncomeRegular(income)">
-                  <span class="form-check-sign">
+<mat-tab-group dynamicHeight>
+  <mat-tab label="{{cashbook.name}} [Balance: {{'$' + cashbook.balance}}]" *ngFor="let cashbook of cashbooks">
+    <div class="single-table">
+      <button mat-icon-button class="edit-cashbook" (click)="openEditCashbookDialog(cashbook)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button class="delete-cashbook" (click)="openDeleteCashbookDialog(cashbook)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <div class="row">
+        <div class="col-md-6">
+          <div>
+            <button mat-flat-button class="add-income-btn" (click)="openAddIncomeDialog(cashbook)">Add</button>
+          </div>
+          <div class="table-responsive"
+               *ngIf="findIncomeByCashbookId(cashbook) && findIncomeByCashbookId(cashbook).length > 0">
+            <table class="table text-center">
+              <thead class="text-uppercase bg-light">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Income Purpose</th>
+                <th scope="col">Payment</th>
+                <th scope="col">From</th>
+                <th scope="col">Date</th>
+                <th scope="col">Regular</th>
+                <th scope="col">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let income of findIncomeByCashbookId(cashbook) let i = index"
+                  [class.regular]="income.regular">
+                <th class="pointer" (click)="openEditIncomeDialog(income)" scope="row">{{i + 1}}</th>
+                <td class="pointer"
+                    (click)="openEditIncomeDialog(income)">{{income.flowPurpose.trim() != '' ? income.flowPurpose : 'None'}}</td>
+                <td class="pointer" (click)="openEditIncomeDialog(income)">{{'$' + income.payment}}</td>
+                <td class="pointer"
+                    (click)="openEditIncomeDialog(income)">{{income.from.trim() != '' ? income.from : 'None'}}</td>
+                <td class="pointer"
+                    (click)="openEditIncomeDialog(income)">{{income.transactionDate | cashbookDatePipe }}</td>
+                <td>
+                  <div class="form-check">
+                    <div class="form-check-label">
+                      <input class="form-check-input" type="checkbox" value="" [checked]="income.regular"
+                             (click)="toggleIncomeRegular(income)">
+                      <span class="form-check-sign">
                 <span class="check"></span>
               </span>
-                </div>
-              </div>
-            </td>
-            <td><em class="ti-trash" (click)="openDeleteIncomeDialog(income)"></em></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div>
-        <button mat-flat-button class="add-costs-btn" (click)="openAddCostDialog(cashbook)">Add</button>
-      </div>
-      <div class="table-responsive">
-        <table class="table text-center">
-          <thead class="text-uppercase bg-light">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Cost Purpose</th>
-            <th scope="col">Payment</th>
-            <th scope="col">To</th>
-            <th scope="col">Date</th>
-            <th scope="col">Full paid</th>
-            <th scope="col">Action</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let costs of findCostsByCashbookId(cashbook) let i = index"
-              [class.notFullPaid]="!costs.fullPaid">
-            <th class="pointer" (click)="openEditCostsDialog(costs)" scope="row">{{i + 1}}</th>
-            <td class="pointer"
-                (click)="openEditCostsDialog(costs)">{{costs.flowPurpose.trim() != '' ? costs.flowPurpose : 'None'}}</td>
-            <td class="pointer" (click)="openEditCostsDialog(costs)">{{'$' + costs.payment}}</td>
-            <td class="pointer"
-                (click)="openEditCostsDialog(costs)">{{costs.to.trim() != '' ? costs.to : 'None'}}</td>
-            <td class="pointer" (click)="openEditCostsDialog(costs)">{{costs.transactionDate | cashbookDatePipe}}</td>
-            <td>
-              <div class="form-check">
-                <div class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="" [checked]="costs.fullPaid"
-                         (click)="toggleCostFullPaid(costs)">
-                  <span class="form-check-sign">
+                    </div>
+                  </div>
+                </td>
+                <td><em class="ti-trash" (click)="openDeleteIncomeDialog(income)"></em></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="findIncomeByCashbookId(cashbook) && findIncomeByCashbookId(cashbook).length ==0"><p
+            class="not-found">
+            There are no income yet...</p></div>
+        </div>
+        <div class="col-md-6">
+          <div>
+            <button mat-flat-button class="add-costs-btn" (click)="openAddCostDialog(cashbook)">Add</button>
+          </div>
+          <div class="table-responsive"
+               *ngIf="findCostsByCashbookId(cashbook) && findCostsByCashbookId(cashbook).length > 0">
+            <table class="table text-center">
+              <thead class="text-uppercase bg-light">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Cost Purpose</th>
+                <th scope="col">Payment</th>
+                <th scope="col">To</th>
+                <th scope="col">Date</th>
+                <th scope="col">Full paid</th>
+                <th scope="col">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let costs of findCostsByCashbookId(cashbook) let i = index"
+                  [class.notFullPaid]="!costs.fullPaid">
+                <th class="pointer" (click)="openEditCostsDialog(costs)" scope="row">{{i + 1}}</th>
+                <td class="pointer"
+                    (click)="openEditCostsDialog(costs)">{{costs.flowPurpose.trim() != '' ? costs.flowPurpose : 'None'}}</td>
+                <td class="pointer" (click)="openEditCostsDialog(costs)">{{'$' + costs.payment}}</td>
+                <td class="pointer"
+                    (click)="openEditCostsDialog(costs)">{{costs.to.trim() != '' ? costs.to : 'None'}}</td>
+                <td class="pointer"
+                    (click)="openEditCostsDialog(costs)">{{costs.transactionDate | cashbookDatePipe}}</td>
+                <td>
+                  <div class="form-check">
+                    <div class="form-check-label">
+                      <input class="form-check-input" type="checkbox" value="" [checked]="costs.fullPaid"
+                             (click)="toggleCostFullPaid(costs)">
+                      <span class="form-check-sign">
                 <span class="check"></span>
               </span>
-                </div>
-              </div>
-            </td>
-            <td><em class="ti-trash" (click)="openDeleteCostDialog(costs)"></em></td>
-          </tr>
-          </tbody>
-        </table>
+                    </div>
+                  </div>
+                </td>
+                <td><em class="ti-trash" (click)="openDeleteCostDialog(costs)"></em></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="findCostsByCashbookId(cashbook) && findCostsByCashbookId(cashbook).length ==0"><p
+            class="not-found">
+            There are no costs yet...</p></div>
+        </div>
       </div>
     </div>
-  </div>
-  <hr>
-</div>
+  </mat-tab>
+</mat-tab-group>

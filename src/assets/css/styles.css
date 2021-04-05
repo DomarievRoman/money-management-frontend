@@ -1,4 +1,31 @@
-/*------------------------- 1. Core Css -------------------*/
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Poppins:100,300,400,500,600,700,800,900');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: #fff;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
 
 .page-container {
   width: 100%;
@@ -46,16 +73,6 @@
   padding: 0 30px 50px;
 }
 
-/*-------------------- 2.2 Header Area -------------------*/
-
-.header-area {
-  padding: 15px 30px;
-  background: #fff;
-  border-bottom: 1px solid #d8e3e7;
-}
-
-/*-------------------- 2.3 Page Title Area -------------------*/
-
 .page-title-area {
   padding: 13px 30px;
   background: #fff;
@@ -80,64 +97,6 @@
   margin-bottom: 17px;
 }
 
-/*-------------------- 8. Accroding ------------------- */
-
-.according .card {
-  margin-bottom: 20px;
-}
-
-.according .card:last-child {
-  margin-bottom: 0;
-}
-
-.according .card-header {
-  padding: 0;
-  border: none;
-}
-
-.according .card-header a {
-  display: block;
-  background: #EFF3F6;
-  padding: 16px 15px;
-  border-radius: 3px;
-  color: #444;
-  letter-spacing: 0;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.according .card-body {
-  padding: 10px;
-  border: 1px solid #eff3f6;
-  font-size: 14px;
-  letter-spacing: 0;
-  color: #444;
-  line-height: 27px;
-  font-weight: 400;
-}
-
-.according .card-header a {
-  position: relative;
-}
-
-.accordion-s2 .card-header a.collapsed:before {
-  content: "\f107";
-}
-
-.accordion-s2 .card-header a:before {
-  content: "\f106";
-  font-family: fontawesome, serif;
-  position: absolute;
-  right: 13px;
-  color: #444;
-  font-size: 26px;
-}
-
-/*-------------------- 18. Icons ------------------- */
-
-.fw-icons {
-}
-
 .fw-icons a {
   color: #444;
   margin: 9px 0;
@@ -149,54 +108,6 @@
   width: 30px;
   font-size: 14px;
 }
-
-
-/* icon-container */
-
-.icon-section {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.icon-container {
-  cursor: pointer;
-  -ms-flex-preferred-size: calc(100% * (1 / 4));
-  flex-basis: calc(100% * (1 / 4));
-}
-
-.icon-container [class^="ti-"] {
-  width: 30px;
-  font-size: 14px;
-  display: inline-block;
-  -webkit-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
-}
-
-.icon-container:hover [class^="ti-"] {
-  -webkit-transform: scale(2);
-  transform: scale(2);
-  -webkit-transform-origin: left center;
-  transform-origin: left center;
-}
-
-.icon-container span.icon-name {
-  color: #444;
-  margin: 9px 0;
-  display: inline-block;
-  font-family: 'lato', sans-serif;
-  -webkit-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
-}
-
-.icon-container:hover span.icon-name {
-  -webkit-transform: translateX(10px);
-  transform: translateX(10px);
-}
-
-/*-------------------- 19. Table Basic ------------------- */
 
 .single-table .table {
   margin-bottom: 0;
@@ -218,13 +129,4 @@ table tr td [class^="ti-"] {
 .table-bordered td,
 .table-bordered th {
   border: 1px solid rgba(120, 130, 140, 0.13) !important;
-}
-
-.status-p {
-  color: #fff;
-  padding: 0 20px 1px;
-  border-radius: 20px;
-  display: inline-block;
-  text-transform: capitalize;
-  vertical-align: middle;
 }

@@ -2,7 +2,7 @@
   <p mat-dialog-title>{{dialogTitle}}</p>
   <mat-form-field>
     <mat-label>Cashbook name</mat-label>
-    <input required #inputName matInput [(ngModel)]="cashbookName" [formControl]="nameValidValue">
+    <input required #inputName matInput [(ngModel)]="cashbookName" [formControl]="nameValidValue" maxlength="50">
     <mat-error *ngIf="nameValidValue.invalid">{{getErrorMessage()}}</mat-error>
 
     <button *ngIf="cashbookName.trim().length > 0" mat-button matSuffix mat-icon-button aria-label="clear"

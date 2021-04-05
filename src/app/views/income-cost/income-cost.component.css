@@ -7,7 +7,7 @@
   cursor: pointer;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
@@ -21,14 +21,13 @@
   background-color: #5fa76f;
 }
 
-hr {
-  background-color: #5fa76f;
-}
-
 .delete-cashbook {
   color: #bd2130;
-  bottom: 12px;
-  left: 98%;
+  right: 1%;
+}
+
+.edit-cashbook {
+  color: #e29342;
 }
 
 h6.balance {
@@ -44,4 +43,15 @@ h6.balance {
   width: 100%;
   color: white;
   background-color: #5fa76f;
+}
+
+.not-found {
+  margin-top: 30px;
+  font-size: 20px;
+  color: rgba(74, 74, 74, 0.98);
+  text-align: center;
+}
+
+.mat-ink-bar {
+  background-color: #5fa76f !important;
 }

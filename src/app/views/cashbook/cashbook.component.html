@@ -6,19 +6,19 @@
     <button mat-icon-button class="add-cashbook" (click)="openAddCashbookDialog()">
       <mat-icon>add</mat-icon>
     </button>
-    <div id="accordion2" class="according accordion-s2">
-      <div id="accordion21" class="collapse show" data-parent="#accordion2">
+    <div class="cashbook-body">
+      <div id="cashbook">
         <app-income-cost [cashbooks]="cashbooks"
                          [incomes]="incomes"
+                         [costs]="costs"
+                         (addIncome)="onAddIncome($event)"
                          (updateIncome)="onUpdateIncome($event)"
                          (deleteIncome)="onDeleteIncome($event)"
-                         (addIncome)="onAddIncome($event)"
-                         (deleteCashbook)="onDeleteCashbook($event)"
                          (updateCashbook)="onUpdateCashbook($event)"
-                         [costs]="costs"
+                         (deleteCashbook)="onDeleteCashbook($event)"
+                         (addCost)="onAddCost($event)"
                          (updateCost)="onUpdateCosts($event)"
-                         (deleteCost)="onDeleteCosts($event)"
-                         (addCost)="onAddCost($event)">
+                         (deleteCost)="onDeleteCosts($event)">
         </app-income-cost>
       </div>
     </div>

@@ -13,15 +13,17 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-import { CashbookDatePipePipe } from './pipe/cashbook-date-pipe.pipe';
+import {CashbookDatePipePipe} from './pipe/cashbook-date-pipe.pipe';
 import {registerLocaleData} from '@angular/common';
 
 import localeEn from '@angular/common/locales/en-001';
-import {MatCheckbox, MatCheckboxModule} from '@angular/material/checkbox';
-import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
-import { EditCostsDialogComponent } from './dialog/edit-costs-dialog/edit-costs-dialog.component';
-import { EditCashbookDialogComponent } from './dialog/edit-cashbook-dialog/edit-cashbook-dialog.component';
-import { IncomeCostComponent } from './views/income-cost/income-cost.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ConfirmDialogComponent} from './dialog/confirm-dialog/confirm-dialog.component';
+import {EditCostsDialogComponent} from './dialog/edit-costs-dialog/edit-costs-dialog.component';
+import {EditCashbookDialogComponent} from './dialog/edit-cashbook-dialog/edit-cashbook-dialog.component';
+import {IncomeCostComponent} from './views/income-cost/income-cost.component';
+import {HttpClientModule} from '@angular/common/http';
+import {MatTabsModule} from '@angular/material/tabs';
 
 registerLocaleData(localeEn);
 
@@ -48,7 +50,9 @@ registerLocaleData(localeEn);
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatTabsModule
   ],
   providers: [],
   entryComponents: [

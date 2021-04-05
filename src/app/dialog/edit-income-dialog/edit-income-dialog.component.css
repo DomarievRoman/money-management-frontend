@@ -2,11 +2,11 @@
   font-size: 20px !important;
 }
 
-.dialog-date-title {
+.dialog-income-from {
   font-size: 20px !important;
 }
 
-.dialog-date-from {
+.dialog-income-date {
   font-size: 20px !important;
 }
 
@@ -36,4 +36,3 @@
   color: white;
   background-color: #bf5959;
 }
-
