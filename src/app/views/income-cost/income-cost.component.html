@@ -1,11 +1,42 @@
+<div class="search-container">
+  <mat-form-field class="incomes">
+    <input matInput placeholder="Incomes search" [(ngModel)]="filterIncomeFlowPurpose"
+           (ngModelChange)="this.checkIncomeFilterChanged()" (keydown.escape)="clearAndSearchIncome()"
+           (keydown.enter)="searchIncome()"/>
+    <button *ngIf="filterIncomeFlowPurpose && filterIncomeFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button
+            aria-label="Clear" (click)="clearAndSearchIncome()" [ngClass]="{'blink-button': !filterIncomeChanged}">
+      <mat-icon>clear</mat-icon>
+    </button>
+    <button *ngIf="filterIncomeFlowPurpose && filterIncomeFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button
+            (click)="searchIncome()" [ngClass]="{'blink-button': filterIncomeChanged}">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field class="costs">
+    <input matInput placeholder="Costs search" [(ngModel)]="filterCostsFlowPurpose"
+           (ngModelChange)="this.checkCostsFilterChanged()" (keydown.escape)="clearAndSearchCosts()"
+           (keydown.enter)="searchCost()"/>
+    <button *ngIf="filterCostsFlowPurpose && filterCostsFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button
+            aria-label="Clear" (click)="clearAndSearchCosts()" [ngClass]="{'blink-button': !filterCostsChanged}">
+      <mat-icon>clear</mat-icon>
+    </button>
+    <button *ngIf="filterCostsFlowPurpose && filterCostsFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button
+            (click)="searchCost()" [ngClass]="{'blink-button': filterCostsChanged}">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
 <mat-tab-group dynamicHeight>
   <mat-tab label="{{cashbook.name}} [Balance: {{'$' + cashbook.balance}}]" *ngFor="let cashbook of cashbooks">
     <div class="single-table">
-      <button mat-icon-button class="edit-cashbook" (click)="openEditCashbookDialog(cashbook)">
+      <button mat-icon-button class="edit-cashbook" title="Edit cashbook" (click)="openEditCashbookDialog(cashbook)">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button class="delete-cashbook" (click)="openDeleteCashbookDialog(cashbook)">
+      <button mat-icon-button class="delete-cashbook" title="Delete cashbook" (click)="openDeleteCashbookDialog(cashbook)">
         <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button class="cashbook-statistics" title="Cashbook statistics">
+        <mat-icon>insert_chart_outlined</mat-icon>
       </button>
       <div class="row">
         <div class="col-md-6">
@@ -53,7 +84,7 @@
               </tbody>
             </table>
           </div>
-          <div *ngIf="findIncomeByCashbookId(cashbook) && findIncomeByCashbookId(cashbook).length ==0"><p
+          <div *ngIf="findIncomeByCashbookId(cashbook) && findIncomeByCashbookId(cashbook).length == 0"><p
             class="not-found">
             There are no income yet...</p></div>
         </div>

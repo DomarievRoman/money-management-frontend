@@ -8,6 +8,7 @@ import {EditCashbookDialogComponent} from '../../dialog/edit-cashbook-dialog/edi
 import {Costs} from '../../model/Costs';
 import {EditCostsDialogComponent} from '../../dialog/edit-costs-dialog/edit-costs-dialog.component';
 import {DialogAction} from '../../dialogResult/DialogResult';
+import {AbstractSearchValues} from '../../data/search/AbstractSearchValues';
 
 @Component({
   selector: 'app-income-cost',
@@ -24,6 +25,9 @@ export class IncomeCostComponent implements OnInit {
 
   @Input()
   costs: Costs[];
+
+  @Input()
+  abstractSearchValues: AbstractSearchValues;
 
   @Output()
   updateIncome = new EventEmitter<Income>();
@@ -48,6 +52,20 @@ export class IncomeCostComponent implements OnInit {
 
   @Output()
   addCost = new EventEmitter<Costs>();
+
+  @Output()
+  searchIncomes = new EventEmitter<AbstractSearchValues>();
+
+  @Output()
+  searchCosts = new EventEmitter<AbstractSearchValues>();
+
+  filterIncomeFlowPurpose: string;
+
+  filterCostsFlowPurpose: string;
+
+  filterIncomeChanged: boolean;
+
+  filterCostsChanged: boolean;
 
   constructor(private dialog: MatDialog) {
   }
@@ -202,5 +220,43 @@ export class IncomeCostComponent implements OnInit {
     } else {
       return [];
     }
+  }
+
+  searchIncome(): void {
+    this.filterIncomeChanged = false;
+    if (!this.abstractSearchValues) {
+      return;
+    }
+    this.abstractSearchValues.flowPurpose = this.filterIncomeFlowPurpose;
+    this.searchIncomes.emit(this.abstractSearchValues);
+  }
+
+  searchCost(): void {
+    this.filterCostsChanged = false;
+    if (!this.abstractSearchValues) {
+      return;
+    }
+    this.abstractSearchValues.flowPurpose = this.filterCostsFlowPurpose;
+    this.searchCosts.emit(this.abstractSearchValues);
+  }
+
+  clearAndSearchIncome(): void {
+    this.filterIncomeFlowPurpose = null;
+    this.searchIncome();
+  }
+
+  checkIncomeFilterChanged(): boolean {
+    this.filterIncomeChanged = this.filterIncomeFlowPurpose !== this.abstractSearchValues.flowPurpose;
+    return this.filterIncomeChanged;
+  }
+
+  clearAndSearchCosts(): void {
+    this.filterCostsFlowPurpose = null;
+    this.searchCost();
+  }
+
+  checkCostsFilterChanged(): boolean {
+    this.filterCostsChanged = this.filterCostsFlowPurpose !== this.abstractSearchValues.flowPurpose;
+    return this.filterCostsChanged;
   }
 }

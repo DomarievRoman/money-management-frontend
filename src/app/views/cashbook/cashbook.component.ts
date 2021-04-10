@@ -8,6 +8,7 @@ import {CashbookDaoImplService} from '../../data/dao/impl/cashbookDao/cashbook-d
 import {CostsDaoImplService} from '../../data/dao/impl/costsDao/costs-dao-impl.service';
 import {IncomeDaoImplService} from '../../data/dao/impl/incomeDao/income-dao-impl.service';
 import {DialogAction} from '../../dialogResult/DialogResult';
+import {AbstractSearchValues} from '../../data/search/AbstractSearchValues';
 
 @Component({
   selector: 'app-cashbook',
@@ -23,6 +24,8 @@ export class CashbookComponent implements OnInit {
 
   @Output()
   addCashbook = new EventEmitter<Cashbook>();
+
+  abstractSearchValues = new AbstractSearchValues();
 
   constructor(private cashbookService: CashbookDaoImplService, private incomeService: IncomeDaoImplService,
               private costsService: CostsDaoImplService, private dialog: MatDialog) {
@@ -114,6 +117,18 @@ export class CashbookComponent implements OnInit {
       if (result.action === DialogAction.SAVE) {
         this.addCashbook.emit(result.obj as Cashbook);
       }
+    });
+  }
+
+  searchIncomes(abstractSearchValues: AbstractSearchValues): void {
+    this.incomeService.findIncomes(abstractSearchValues).subscribe(result => {
+      this.incomes = result;
+    });
+  }
+
+  searchCosts(abstractSearchValues: AbstractSearchValues): void {
+    this.costsService.findCosts(abstractSearchValues).subscribe(result => {
+      this.costs = result;
     });
   }
 }

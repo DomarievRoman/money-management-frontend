@@ -3,6 +3,7 @@ import {Costs} from '../../../../model/Costs';
 import {CostsDao} from '../../interface/CostsDao';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {AbstractSearchValues} from '../../../search/AbstractSearchValues';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,9 @@ export class CostsDaoImplService implements CostsDao {
 
   update(obj: Costs): Observable<Costs> {
     return this.httpClient.put<Costs>(this.url + '/update', obj);
+  }
+
+  findCosts(abstractSearchValues: AbstractSearchValues): Observable<Costs[]> {
+    return this.httpClient.post<Costs[]>(this.url + '/search', abstractSearchValues);
   }
 }

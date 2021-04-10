@@ -1,21 +1,21 @@
 <div class="card">
   <div class="card-body">
     <div class="cashbook-header">
-      <h4 class="header-title">Cashbooks</h4>
+      <button mat-raised-button class="add-cashbook" (click)="openAddCashbookDialog()">New cashbook</button>
     </div>
-    <button mat-icon-button class="add-cashbook" (click)="openAddCashbookDialog()">
-      <mat-icon>add</mat-icon>
-    </button>
     <div class="cashbook-body">
       <div id="cashbook">
         <app-income-cost [cashbooks]="cashbooks"
                          [incomes]="incomes"
                          [costs]="costs"
+                         [abstractSearchValues]="abstractSearchValues"
                          (addIncome)="onAddIncome($event)"
                          (updateIncome)="onUpdateIncome($event)"
                          (deleteIncome)="onDeleteIncome($event)"
+                         (searchIncomes)="searchIncomes($event)"
                          (updateCashbook)="onUpdateCashbook($event)"
                          (deleteCashbook)="onDeleteCashbook($event)"
+                         (searchCosts)="searchCosts($event)"
                          (addCost)="onAddCost($event)"
                          (updateCost)="onUpdateCosts($event)"
                          (deleteCost)="onDeleteCosts($event)">

@@ -1,10 +1,8 @@
 .cashbook-header {
   width: 30%;
-  position: absolute;
 }
 
 .add-cashbook {
   color: #5fa76f;
   bottom: 10px;
-  left: 88px;
 }
