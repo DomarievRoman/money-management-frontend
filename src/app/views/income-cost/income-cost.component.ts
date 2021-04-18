@@ -9,6 +9,8 @@ import {Costs} from '../../model/Costs';
 import {EditCostsDialogComponent} from '../../dialog/edit-costs-dialog/edit-costs-dialog.component';
 import {DialogAction} from '../../dialogResult/DialogResult';
 import {AbstractSearchValues} from '../../data/search/AbstractSearchValues';
+import {CashbookStatistics} from '../../model/CashbookStatistics';
+import {CashbookDaoImplService} from '../../data/dao/impl/cashbookDao/cashbook-dao-impl.service';
 
 @Component({
   selector: 'app-income-cost',
@@ -67,10 +69,19 @@ export class IncomeCostComponent implements OnInit {
 
   filterCostsChanged: boolean;
 
-  constructor(private dialog: MatDialog) {
+  cashbookStatistics: CashbookStatistics;
+
+  showStats: boolean;
+
+  constructor(private dialog: MatDialog, private cashbookService: CashbookDaoImplService) {
   }
 
   ngOnInit(): void {
+    this.showStats = true;
+  }
+
+  closeStats(): void {
+    this.showStats = false;
   }
 
   toggleIncomeRegular(income: Income): void {
@@ -258,5 +269,14 @@ export class IncomeCostComponent implements OnInit {
   checkCostsFilterChanged(): boolean {
     this.filterCostsChanged = this.filterCostsFlowPurpose !== this.abstractSearchValues.flowPurpose;
     return this.filterCostsChanged;
+  }
+
+  getCashbookStatistics(cashbook: Cashbook): void {
+    if (this.showStats) {
+      this.cashbookService.getStatistics(cashbook.id).subscribe(result => {
+        this.cashbookStatistics = result;
+      });
+    }
+    this.showStats = true;
   }
 }

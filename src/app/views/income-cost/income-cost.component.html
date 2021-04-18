@@ -3,11 +3,13 @@
     <input matInput placeholder="Incomes search" [(ngModel)]="filterIncomeFlowPurpose"
            (ngModelChange)="this.checkIncomeFilterChanged()" (keydown.escape)="clearAndSearchIncome()"
            (keydown.enter)="searchIncome()"/>
-    <button *ngIf="filterIncomeFlowPurpose && filterIncomeFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button
+    <button *ngIf="filterIncomeFlowPurpose && filterIncomeFlowPurpose.trim().length > 0" mat-button matSuffix
+            mat-icon-button
             aria-label="Clear" (click)="clearAndSearchIncome()" [ngClass]="{'blink-button': !filterIncomeChanged}">
       <mat-icon>clear</mat-icon>
     </button>
-    <button *ngIf="filterIncomeFlowPurpose && filterIncomeFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button
+    <button *ngIf="filterIncomeFlowPurpose && filterIncomeFlowPurpose.trim().length > 0" mat-button matSuffix
+            mat-icon-button
             (click)="searchIncome()" [ngClass]="{'blink-button': filterIncomeChanged}">
       <mat-icon>search</mat-icon>
     </button>
@@ -16,15 +18,81 @@
     <input matInput placeholder="Costs search" [(ngModel)]="filterCostsFlowPurpose"
            (ngModelChange)="this.checkCostsFilterChanged()" (keydown.escape)="clearAndSearchCosts()"
            (keydown.enter)="searchCost()"/>
-    <button *ngIf="filterCostsFlowPurpose && filterCostsFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button
+    <button *ngIf="filterCostsFlowPurpose && filterCostsFlowPurpose.trim().length > 0" mat-button matSuffix
+            mat-icon-button
             aria-label="Clear" (click)="clearAndSearchCosts()" [ngClass]="{'blink-button': !filterCostsChanged}">
       <mat-icon>clear</mat-icon>
     </button>
-    <button *ngIf="filterCostsFlowPurpose && filterCostsFlowPurpose.trim().length > 0" mat-button matSuffix mat-icon-button
+    <button *ngIf="filterCostsFlowPurpose && filterCostsFlowPurpose.trim().length > 0" mat-button matSuffix
+            mat-icon-button
             (click)="searchCost()" [ngClass]="{'blink-button': filterCostsChanged}">
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
+</div>
+<div *ngIf="cashbookStatistics && cashbookStatistics != undefined && showStats">
+  <div class="row">
+    <div class="col-md-2 block">
+      <h6>Largest income</h6>
+      <h2 id="income">
+        +${{cashbookStatistics.largestIncomePayment != null ? cashbookStatistics.largestIncomePayment : '0'}}</h2>
+      <p class="cashbook-name">statistics of "{{cashbookStatistics.cashbook.name}}"</p>
+    </div>
+    <div class="col-md-2 block">
+      <h6>Largest cost</h6>
+      <h2 id="cost">
+        -${{cashbookStatistics.largestCostPayment != null ? cashbookStatistics.largestCostPayment : '0'}}</h2>
+      <p class="cashbook-name">statistics of "{{cashbookStatistics.cashbook.name}}"</p>
+    </div>
+    <div class="col-md-3 table-wrapper-scroll-y my-custom-scrollbar block">
+      <h6 class="payment-by-month">Current month incomes</h6>
+      <table class="table text-center">
+        <thead class="text-uppercase">
+        <tr>
+          <th scope="col">Purpose</th>
+          <th scope="col">Payment</th>
+          <th scope="col">From</th>
+          <th scope="col">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let stat of cashbookStatistics.allIncomesByMonth">
+          <td>{{stat.flowPurpose.trim() != '' ? stat.flowPurpose : 'None'}}</td>
+          <td>{{'$' + stat.payment}}</td>
+          <td>{{stat.from.trim() != '' ? stat.from : 'None'}}</td>
+          <td>{{stat.transactionDate | cashbookDatePipe }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3 table-wrapper-scroll-y my-custom-scrollbar block">
+      <h6 class="payment-by-month">Current month costs</h6>
+      <table class="table text-center">
+        <thead class="text-uppercase">
+        <tr>
+          <th scope="col">Purpose</th>
+          <th scope="col">Payment</th>
+          <th scope="col">To</th>
+          <th scope="col">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let stat of cashbookStatistics.allCostsByMonth">
+          <td>{{stat.flowPurpose.trim() != '' ? stat.flowPurpose : 'None'}}</td>
+          <td>{{'$' + stat.payment}}</td>
+          <td>{{stat.to.trim() != '' ? stat.to : 'None'}}</td>
+          <td>{{stat.transactionDate | cashbookDatePipe }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <button mat-icon-button class="action-button refresh-stat" title="Refresh statistics after actions" (click)="getCashbookStatistics(cashbookStatistics.cashbook)">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button mat-icon-button class="action-button close-stat" title="Close statistics" (click)="closeStats()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
 </div>
 <mat-tab-group dynamicHeight>
   <mat-tab label="{{cashbook.name}} [Balance: {{'$' + cashbook.balance}}]" *ngFor="let cashbook of cashbooks">
@@ -32,10 +100,12 @@
       <button mat-icon-button class="edit-cashbook" title="Edit cashbook" (click)="openEditCashbookDialog(cashbook)">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button class="delete-cashbook" title="Delete cashbook" (click)="openDeleteCashbookDialog(cashbook)">
+      <button mat-icon-button class="delete-cashbook" title="Delete cashbook"
+              (click)="openDeleteCashbookDialog(cashbook)">
         <mat-icon>delete</mat-icon>
       </button>
-      <button mat-icon-button class="cashbook-statistics" title="Cashbook statistics">
+      <button mat-icon-button class="cashbook-statistics" title="Cashbook statistics"
+              (click)="getCashbookStatistics(cashbook)">
         <mat-icon>insert_chart_outlined</mat-icon>
       </button>
       <div class="row">

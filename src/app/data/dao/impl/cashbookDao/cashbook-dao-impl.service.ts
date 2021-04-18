@@ -3,6 +3,7 @@ import {CashbookDao} from '../../interface/CashbookDao';
 import {Observable} from 'rxjs';
 import {Cashbook} from '../../../../model/Cashbook';
 import {HttpClient} from '@angular/common/http';
+import {CashbookStatistics} from '../../../../model/CashbookStatistics';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class CashbookDaoImplService implements CashbookDao {
   }
 
   get(id: number): Observable<Cashbook> {
-    return undefined;
+    return this.httpClient.get<Cashbook>(this.url + '/get/' + id);
   }
 
   getAll(): Observable<Cashbook[]> {
@@ -32,5 +33,9 @@ export class CashbookDaoImplService implements CashbookDao {
 
   update(obj: Cashbook): Observable<Cashbook> {
     return this.httpClient.put<Cashbook>(this.url + '/update', obj);
+  }
+
+  getStatistics(id: number): Observable<CashbookStatistics> {
+    return this.httpClient.get<CashbookStatistics>(this.url + '/getStatistics/' + id);
   }
 }
